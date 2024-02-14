@@ -1,0 +1,57 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #272727; /* Background color for the entire page */
+}
+
+
+h1 {
+    text-align: center;
+    color: white;
+    
+        font-family: "Racing Sans One", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+      
+      
+}
+
+/* Styling for clickable images */
+img.thumbs {
+    margin: 5px;
+    cursor: pointer;
+    border: 2px solid #8664ff;
+    transition: border-color 0.3s ease-in-out;
+    border-radius: 10px;
+}
+
+img.thumbs:hover {
+    border-color: #f700ff; /* Change border color on hover */
+}
+
+/* Styling for the main image */
+#main-image {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    border-radius: 10px;
+    height: auto;
+    border: 2px solid #f700ff; 
+}
+
+/* Styling for the thumbnail container */
+#thumbnails {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Styling for the thumbnail images */
+#thumbnails img {
+    max-width: 60px;
+    height: auto;
+}
+
+/* Center the thumbnails */
+#thumbnails div {
+    display: inline-block;
+    margin: 5px;
+}

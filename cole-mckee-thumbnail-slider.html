@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>MDIA 2294: Cole McKee Assignment 2 - Thumbnail Slider</title>
+	<link rel="stylesheet" href="cole-mckee-assignment2.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Racing+Sans+One&display=swap" rel="stylesheet">
+	<style>	
+	    img.thumbs{
+	    	margin:5px;
+	        cursor:pointer;
+	    }
+	
+	</style>
+    
+</head>
+<body>
+
+	<h1>MDIA 2294: Cole McKee Assignment 2 - Thumbnail Slider</h1>
+	
+	<div style="text-align:center;">
+	    <div><img id="main-image" /></div>	
+	    <div id="thumbnails"></div>	
+	</div>
+	<script>
+
+	//this sets the variable for image_root_names so that when combined with the root index Full.png or Thumb.png, it links the corresponding image. 
+    //changing the order in the list will change the order of the thumbnails. 
+    //to set the main image, change the first value or rearrange the list.
+
+		const image_root_names = ["rx7", "s15", "g35", "lexus-is250", "mk5", "350"] ;
+
+
+		const set_main_image = (image_index) => {
+
+			console.log(image_root_names [image_index]);
+
+	//the document.queryselector tells the document to select an element, then inside brackets we tell it which element to select. 
+	//this formula tells it which image to select based on the root name chosen. 
+
+			document.querySelector("#main-image").src = "images/" + image_root_names [image_index] + "Full.png";
+
+		}
+
+		const set_thumbnails = () => {
+
+			//this forEach list uses our array of root names, and creates a thumbnail for each. 
+			
+			image_root_names.forEach ( (car, array_index) => {
+
+				const new_thumb = document.createElement("img");
+
+			//this formula tells it to create a new thumbnail for every image listed in the array. if i add more images to the root names constant, they will appear on screen. 
+
+				new_thumb.src = "images/" + car + "Thumb.png";
+
+			//states that the source of the new thumbnail should be this path. 
+
+				new_thumb.className = "thumbs";
+
+			//event listener tells it to set the image once clicked. 
+
+				new_thumb.addEventListener("click", () => {
+
+			//sets the main image to whatever image is clicked.
+
+					set_main_image(array_index);
+				});
+
+				document.querySelector("#thumbnails").append(new_thumb);
+			})
+		}
+		//this tells the document to set the first image upon loading the window.
+
+		window.addEventListener("load", () => {
+			set_main_image(0);
+			set_thumbnails();
+		});
+	</script>
+</body>
+</html>
