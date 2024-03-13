@@ -2,82 +2,204 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>MDIA 2294: Cole McKee Assignment 2 - Thumbnail Slider</title>
+	<title>MDIA 2294</title>
 	<link rel="stylesheet" href="cole-mckee-assignment2.css">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Racing+Sans+One&display=swap" rel="stylesheet">
-	<style>	
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Racing+Sans+One&display=swap" rel="stylesheet">
+	<style>	    
+	    img {
+	        margin:5px;
+	    }
+	    
 	    img.thumbs{
-	    	margin:5px;
 	        cursor:pointer;
 	    }
 	
 	</style>
-    
+	
 </head>
 <body>
 
-	<h1>MDIA 2294: Cole McKee Assignment 2 - Thumbnail Slider</h1>
+	<h1>MDIA 2294: Assignment 2</h1>
 	
 	<div style="text-align:center;">
-	    <div><img id="main-image" /></div>	
-	    <div id="thumbnails"></div>	
+	    <table>
+	        <tr>
+	            <td></td>
+	            <td style="text-align:center;">
+                    <div><img id="main-image" alt="Main Image" /></div>
+					<div id="thumbnails"></div>	 
+                </td>
+	            <td></td>
+	        
+	        </tr>
+	        <tr>
+	            <td>
+	                <img src="images-cole/first.png" id="first-btn" />            
+	                <img src="images-cole/prev.png" id="prev-btn" />
+	            </td>
+	            <td>
+	                <div id="thumbnail-area"></div>	        
+	            </td>
+	            <td>
+	                <img src="images-cole/next.png" id="next-btn" />            
+	                <img src="images-cole/last.png" id="last-btn" />
+	            </td>
+	        </tr>	    
+	    </table>       
 	</div>
+    
 	<script>
 
-	//this sets the variable for image_root_names so that when combined with the root index Full.png or Thumb.png, it links the corresponding image. 
-    //changing the order in the list will change the order of the thumbnails. 
-    //to set the main image, change the first value or rearrange the list.
-
-		const image_root_names = ["rx7", "s15", "g35", "lexus-is250", "mk5", "350"] ;
 
 
+		let current_index = 0;
+		
+				//this sets the variable for image_root_names so that when combined with the root index Full.png or Thumb.png, it links the corresponding image. 
+				// this constant variable is the list of images in my site.
+				//image_root_names is the name of my array which contains image prefixes. 
+		const image_root_names = ["350", "s15", "g35", "lexus-is250", "mk5", "rx7"] ;
+
+				//this arrow function sets the main image by checking the array image_root_names, and putting them with image_index. for example, if we chose "350" as the root name, the image_index is either full.png or thumb.png, when they get put together, it tells what image to show. 
 		const set_main_image = (image_index) => {
 
 			console.log(image_root_names [image_index]);
 
-	//the document.queryselector tells the document to select an element, then inside brackets we tell it which element to select. 
-	//this formula tells it which image to select based on the root name chosen. 
+				//the document.queryselector tells the document to select an element, then inside the brackets we tell it which element to select. 
+				//this formula tells it which image to select based on the root name chosen, in combination with the file extension. 
 
-			document.querySelector("#main-image").src = "images/" + image_root_names [image_index] + "Full.png";
+			document.querySelector("#main-image").src = "images-cole/" + image_root_names [image_index] + "Full.png";
+				// this tells the dom that the image_index is the one we are using. 
+			current_index = image_index;
 
+			update_thumbnails(image_index);
 		}
-
+				//this function stes the thumbnails using a foreach loop, which creates a new thumb for each of the images in my array. 
 		const set_thumbnails = () => {
 
-			//this forEach list uses our array of root names, and creates a thumbnail for each. 
+				//this forEach list uses our array of root names, and creates a thumbnail for each. 
 			
-			image_root_names.forEach ( (car, array_index) => {
-
+			image_root_names.forEach ( (car, image_index) => {
+				//document.createelement
 				const new_thumb = document.createElement("img");
 
-			//this formula tells it to create a new thumbnail for every image listed in the array. if i add more images to the root names constant, they will appear on screen. 
+				//this formula tells it to create a new thumbnail for every image listed in the array. if i add more images to the root names constant, they will appear on screen. 
 
-				new_thumb.src = "images/" + car + "Thumb.png";
+				new_thumb.src = "images-cole/" + car + "Thumb.png";
 
-			//states that the source of the new thumbnail should be this path. 
+				//states that the source of the new thumbnail should be this path.  ^^^
 
 				new_thumb.className = "thumbs";
 
-			//event listener tells it to set the image once clicked. 
+				//event listener tells it to set the image once clicked. 
 
 				new_thumb.addEventListener("click", () => {
 
-			//sets the main image to whatever image is clicked.
+				//sets the main image to whatever image is clicked.
 
-					set_main_image(array_index);
+					set_main_image(image_index);
 				});
 
 				document.querySelector("#thumbnails").append(new_thumb);
 			})
 		}
-		//this tells the document to set the first image upon loading the window.
-
+				
+		//this tells the document to set the first image, set the thumbnails, and update the thumbnails, all upon loading the window.
 		window.addEventListener("load", () => {
 			set_main_image(0);
 			set_thumbnails();
+			update_thumbnails();
 		});
+
+// this function is to update all the thumbnails
+		
+		const update = document.querySelector("#thumbnails");
+		
+		const update_thumbnails = () => {
+	
+			//this queryselectorAll is to select all quieries with the name "thumbs" instead of just one. 
+			const update_thumb2 = document.querySelectorAll(".thumbs");
+
+
+			//this arrow function changes the properties of the thumbnails. 
+			update_thumb2.forEach(( car, image_index) => {
+
+// this ternary means that if the current index is exactly equal to the main image set, then the opacity will be 100%. if the current index is not exactly equal, then the opacity will be changed to 70%
+				(current_index === image_index) ? car.style.opacity="1" : car.style.opacity= "0.7";
+
+				
+
+				
+			})
+
+
+			
+
+		} 
+	//this function allows the first button to work
+	//first, we must select which element to apply the function, which is first-btn
+	// set_nav_first is the arrow function that we run every time we click the button. 
+		const first = document.querySelector("#first-btn");
+
+		const set_nav_first = () => {
+			
+			//set_main_image(X) sets the image to whatever the argument is. in this case, the argument is 0, so it sets the first image in the array. If i set it to like 5, then it would be the last image.
+			set_main_image(0);
+		}
+	//event listener is the action, the argument is click, then running the following function. the event listener is added to the button, that we called "first" before defining the function.
+		first.addEventListener("click", set_nav_first);
+
+
+		//The last button has a similar outline. we set the element as a variable so that we can attach a function. 
+		const last = document.querySelector("#last-btn");
+
+
+		//This part is the same, we are just changing the image in the array. in this case, set_main_image(5) is the last image in the array.
+		const set_nav_last = () => {
+			
+
+			set_main_image(5);
+
+		}
+	// by adding the event listener, we run this function upon clicking the button "last"
+		last.addEventListener("click", set_nav_last);
+
+
+		//Heres where it gets different. this variable is the same, we have to call the function. but our function will do something different, since we want the main image to change instead of just being 1 or 5. 
+		const next = document.querySelector("#next-btn");
+//define the function 
+		const set_nav_next = () => {
+//inside the function, we use a ternary statement to determine whether or not the value is correct. 
+// the new variable "next-index" = (is the current_index greater or equal to image_root_names (the array name) -1? (minus one since arrays start at zero) ? if it is, value is 0. the semi colon is the else part. if it's not, add one to the current_index. because current_index = image_index, we are really adding one to the image_index, which sets a new main image. 
+			const next_index = (current_index >= image_root_names.length - 1) ? 0 : current_index + 1;
+
+            set_main_image(next_index);
+			
+		}
+//again, another event listener linked to the correct element will actually run the function.
+		next.addEventListener("click", set_nav_next);
+
+
+		//previous button is the exact same logic, but reversed. 
+		//query selector to select the element and link to the variable. 
+	const prev = document.querySelector("#prev-btn");
+//arrow function that will change the image when clicked. 
+		const set_nav_prev = () => {
+			
+			// if the current index is less than or = 0, then maintain the image. the minus one is still for the index since they start at 0, and the minus one beside current_index is for lowering the index value. opposite to the plus 1 in the next function, this one goes backward because we are subtracting. 
+			const prev_index = (current_index <= 0 ) ? image_root_names.length - 1 : current_index -1;
+
+			set_main_image(prev_index);
+
+			// this sets the main image as the function we just ran. 
+		}	
+//another event listener so that the function actually runs
+		prev.addEventListener("click", set_nav_prev);
+	
+		
+//that's all folks 
 	</script>
+	
 </body>
 </html>
