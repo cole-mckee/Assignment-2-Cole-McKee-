@@ -51,7 +51,7 @@
 	</div>
     
 	<script>
-
+				//Cole_McKeeA01368956 Assignment-2 Thumbnail Slider
 
 
 		let current_index = 0;
@@ -100,6 +100,7 @@
 
 					set_main_image(image_index);
 				});
+//this states that within the thumbnails element, we create a new thumb. since new thumb was created for 5 images, it adds five images to the div.
 
 				document.querySelector("#thumbnails").append(new_thumb);
 			})
@@ -122,7 +123,7 @@
 			const update_thumb2 = document.querySelectorAll(".thumbs");
 
 
-			//this arrow function changes the properties of the thumbnails. 
+			//this arrow function changes the properties of the thumbnails for each thumbnail.
 			update_thumb2.forEach(( car, image_index) => {
 
 // this ternary means that if the current index is exactly equal to the main image set, then the opacity will be 100%. if the current index is not exactly equal, then the opacity will be changed to 70%
